@@ -107,10 +107,7 @@ class BorrowManager
 {
 private:
     map<string, int> stock;
-    BookManager &bookManager;
 public:
-
-    BorrowManager(BookManager& bm) : bookManager(bm){}
     // 재고 초기화 메서드
     void initializeStock(const Book& book, int quantity = 3)
     {
@@ -127,29 +124,7 @@ public:
             if (stock[title] > 0)
             {
                 stock[title] -= 1;
-            }
-            else // 재고가 없는 경우
-            {
-                cout << "재고가 없어 대여할 수 없습니다." << endl;
-            }
-        }
-        else // 책이 존재하지 않는 경우
-        {
-            cout << "책이 존재하지 않습니다." << endl;
-        }
-    }
-
-    // 책 대여 메서드 by author
-    void borrowBookByAuthor(string author)
-    {
-        string title = bookManager.getBookByAuthor(author)->title;
-        // 책이 존재할 경우
-        if (stock.find(title) != stock.end())
-        {
-            // 재고가 있는 경우
-            if (stock[title] > 0)
-            {
-                stock[title] -= 1;
+                cout << "책을 1권 대여했습니다. 재고를 업데이트합니다." << endl;
             }
             else // 재고가 없는 경우
             {
@@ -201,7 +176,7 @@ public:
 
 int main() {
     BookManager manager;
-    BorrowManager borrow_manager(manager);
+    BorrowManager borrow_manager;
 
     // 도서관 관리 프로그램의 기본 메뉴를 반복적으로 출력하여 사용자 입력을 처리합니다.
     // 프로그램 종료를 선택하기 전까지 계속 동작합니다.
@@ -272,7 +247,7 @@ int main() {
             cout << "책 저자: ";
             cin.ignore(); // 이전 입력의 잔여 버퍼를 제거
             getline(cin, author); // 제목 입력 (공백 포함)
-            borrow_manager.borrowBookByAuthor(author);
+            borrow_manager.borrowBookByTitle(manager.getBookByAuthor(author)->title);
         }
         else if (choice == 7){
             // 7번 선택: 제목으로 책 반납
