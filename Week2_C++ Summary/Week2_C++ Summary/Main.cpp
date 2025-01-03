@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <map>
+#include <unordered_map>
 
 using namespace std; // namespace std 사용
 
@@ -106,7 +106,7 @@ public:
 class BorrowManager
 {
 private:
-    map<string, int> stock;
+    unordered_map<string, int> stock;
 public:
     // 재고 초기화 메서드
     void initializeStock(const Book& book, int quantity = 3)
@@ -115,7 +115,7 @@ public:
     }
 
     // 책 대여 메서드
-    void borrowBookByTitle(string title)
+    void borrowBook(string title)
     {
         // 책이 존재할 경우
         if (stock.find(title) != stock.end())
@@ -238,7 +238,7 @@ int main() {
             cout << "책 제목: ";
             cin.ignore(); // 이전 입력의 잔여 버퍼를 제거
             getline(cin, title); // 제목 입력 (공백 포함)
-            borrow_manager.borrowBookByTitle(title);
+            borrow_manager.borrowBook(title);
         }
         else if (choice == 6){
             // 6번 선택: 저자명으로 책 대여
@@ -247,7 +247,7 @@ int main() {
             cout << "책 저자: ";
             cin.ignore(); // 이전 입력의 잔여 버퍼를 제거
             getline(cin, author); // 제목 입력 (공백 포함)
-            borrow_manager.borrowBookByTitle(manager.getBookByAuthor(author)->title);
+            borrow_manager.borrowBook(manager.getBookByAuthor(author)->title);
         }
         else if (choice == 7){
             // 7번 선택: 제목으로 책 반납
